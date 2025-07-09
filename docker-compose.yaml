@@ -15,7 +15,7 @@ services:
 
   tor:
     image: osminogin/tor-simple:latest
-    container_name: tor_service
+    container_name: tornet_forum
     user: tor
     volumes:
       - ./tor/torrc:/etc/tor/torrc
