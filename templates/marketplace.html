@@ -1,0 +1,31 @@
+<!-- templates/marketplace.html -->
+{% extends 'base.html' %}
+{% block title %}Marketplace - Cyber Forum{% endblock %}
+{% block content %}
+    <h2 class="text-light">Marketplace</h2>
+    <div class="card bg-dark border-secondary">
+        <div class="card-body">
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Posts</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    <tr>
+                        <td>Buyers Place</td>
+                        <td>{{ category_counts.marketplace.Buyers | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='marketplace', category='Buyers') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sellers Place</td>
+                        <td>{{ category_counts.marketplace.Sellers | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='marketplace', category='Sellers') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

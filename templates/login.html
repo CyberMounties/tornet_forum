@@ -1,0 +1,28 @@
+<!-- templates/login.html -->
+{% extends 'base.html' %}
+{% block title %}Login - Cyber Forum{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-light">Login</h2>
+    <div class="card bg-dark border-secondary">
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label text-light">Username</label>
+                    <input type="text" id="username" name="username" class="form-control bg-dark text-light border-secondary" placeholder="Enter username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-light">Password</label>
+                    <input type="password" id="password" name="password" class="form-control bg-dark text-light border-secondary" placeholder="Enter password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="captcha" class="form-label text-light">CAPTCHA</label>
+                    <img src="{{ url_for('static', filename=captcha_image.split('static/')[1]) }}" alt="CAPTCHA" class="mb-2">
+                    <input type="text" id="captcha" name="captcha" class="form-control bg-dark text-light border-secondary" placeholder="Enter CAPTCHA code" required>
+                </div>
+                <button type="submit" class="btn btn-outline-secondary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

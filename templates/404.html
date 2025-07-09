@@ -1,0 +1,12 @@
+<!-- templates/404.html -->
+{% extends 'base.html' %}
+{% block title %}404 - Not Found - Cyber Forum{% endblock %}
+{% block content %}
+    <h2 class="text-light">404 - Not Found</h2>
+    <div class="card bg-dark border-secondary">
+        <div class="card-body">
+            <p class="text-light">The requested post or profile could not be found.</p>
+            <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Back to Home</a>
+        </div>
+    </div>
+{% endblock %}

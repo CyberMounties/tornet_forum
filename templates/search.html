@@ -1,0 +1,55 @@
+<!-- templates/search.html -->
+{% extends 'base.html' %}
+{% block title %}Search - Cyber Forum{% endblock %}
+{% block content %}
+    <h2 class="text-light">Search</h2>
+    <div class="card bg-dark border-secondary">
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('search') }}">
+                <div class="input-group mb-3">
+                    <input type="text" name="query" class="form-control bg-dark text-light border-secondary" placeholder="Search posts..." value="{{ query }}">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label text-light">Filter by Type</label>
+                    <select name="type" class="form-select bg-dark text-light border-secondary">
+                        <option value="" {% if post_type == '' %}selected{% endif %}>All</option>
+                        <option value="marketplace" {% if post_type == 'marketplace' %}selected{% endif %}>Marketplace</option>
+                        <option value="services" {% if post_type == 'services' %}selected{% endif %}>Services</option>
+                        <option value="announcements" {% if post_type == 'announcements' %}selected{% endif %}>Announcements</option>
+                    </select>
+                </div>
+            </form>
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Posted By</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <tr>
+                                <td>{{ post.category }}</td>
+                                <td><a href="{{ url_for('post_detail', post_type=post.post_type, post_id=post.id) }}" class="text-light">{{ post.title }}</a></td>
+                                <td>{{ post.description or post.content or '' | safe }}</td>
+                                <td><a href="{{ url_for('profile_detail', username=post.username) }}" class="text-light">{{ post.username }}</a></td>
+                                <td>{{ post.price or '' }}</td>
+                                <td>{{ post.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-light">No results found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

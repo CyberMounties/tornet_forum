@@ -1,0 +1,99 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %}Home - Cyber Forum{% endblock %}
+{% block content %}
+    <!-- Banner -->
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Welcome to the Underground!</h4>
+        <p class="text-dark">This is a simulated cyber-crime forum as part of a Cyber Threat Intelligence course by Cyber Mounties Academy.</p>
+    </div>
+
+    <!-- General Categories -->
+    <div class="card bg-dark border-secondary mb-4">
+        <div class="card-header text-light">General</div>
+        <div class="card-body">
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Posts</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    <tr>
+                        <td>Announcements</td>
+                        <td>{{ category_counts.announcements.Announcements | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='announcements', category='Announcements') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>General</td>
+                        <td>{{ category_counts.announcements.General | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='announcements', category='General') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>MM Service</td>
+                        <td>{{ category_counts.announcements['MM Service'] | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='announcements', category='MM Service') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Marketplace Categories -->
+    <div class="card bg-dark border-secondary mb-4">
+        <div class="card-header text-light">Marketplace</div>
+        <div class="card-body">
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Posts</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    <tr>
+                        <td>Buyers Place</td>
+                        <td>{{ category_counts.marketplace.Buyers | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='marketplace', category='Buyers') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Sellers Place</td>
+                        <td>{{ category_counts.marketplace.Sellers | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='marketplace', category='Sellers') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Services Categories -->
+    <div class="card bg-dark border-secondary">
+        <div class="card-header text-light">Services</div>
+        <div class="card-body">
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Posts</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    <tr>
+                        <td>Sell Services</td>
+                        <td>{{ category_counts.services.Sell | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='services', category='Sell') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Buy Services</td>
+                        <td>{{ category_counts.services.Buy | default(0) }}</td>
+                        <td><a href="{{ url_for('category', post_type='services', category='Buy') }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

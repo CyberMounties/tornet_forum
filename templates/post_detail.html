@@ -1,0 +1,41 @@
+<!-- templates/post_detail.html -->
+{% extends 'base.html' %}
+{% block title %}Post - {{ post.title }} - Cyber Forum{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-light">{{ post.title }}</h2>
+    <div class="card bg-dark border-secondary mb-4">
+        <div class="card-body">
+            <h4 class="card-title text-light">{{ post.category }}</h4>
+            <p class="card-text text-light">
+                {% if post_type == 'announcements' %}
+                    {{ post.content | safe }}
+                {% else %}
+                    {{ post.description | safe }}<br>
+                    <strong>Price:</strong> {{ post.price or 'N/A' }}
+                {% endif %}
+                <br><br>
+                <strong>Posted by:</strong> <a href="{{ url_for('profile_detail', username=user.username) }}" class="text-light">{{ user.username }}</a><br>
+                <strong>Date:</strong> {{ post.date }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="card bg-dark border-secondary">
+        <div class="card-header text-light">Comments</div>
+        <div class="card-body">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="mb-3">
+                        <p class="text-light"><strong>{{ comment.author.username }}</strong> ({{ comment.date }}): {{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-light">No comments yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{{ url_for('category', post_type=post_type, category=post.category) }}" class="btn btn-outline-secondary mt-3">Back to {{ post.category }}</a>
+</div>
+{% endblock %}

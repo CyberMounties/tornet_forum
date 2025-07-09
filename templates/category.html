@@ -1,0 +1,50 @@
+<!-- templates/category.html -->
+{% extends 'base.html' %}
+{% block title %}{{ category }} - Cyber Forum{% endblock %}
+{% block content %}
+    <h2 class="text-light">{{ category }}</h2>
+    <div class="card bg-dark border-secondary">
+        <div class="card-body">
+            <table class="table table-dark table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Posted By</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Comments</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-light">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <tr>
+                                <td>{{ post.title }}</td>
+                                <td><a href="{{ url_for('profile_detail', username=post.username) }}" class="text-light">{{ post.username }}</a></td>
+                                <td>{{ post.date }}</td>
+                                <td>{{ post.comments }}</td>
+                                <td><a href="{{ url_for('post_detail', post_type=post_type, post_id=post.id) }}" class="btn btn-outline-secondary btn-sm">View</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-light">No posts found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <nav aria-label="Category pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {{ 'disabled' if page == 1 }}">
+                        <a class="page-link" href="{{ url_for('category', post_type=post_type, category=category, page=page-1) if page > 1 else '#' }}">Previous</a>
+                    </li>
+                    <li class="page-item"><span class="page-link">Page {{ page }} of {{ total_pages }}</span></li>
+                    <li class="page-item {{ 'disabled' if page >= total_pages }}">
+                        <a class="page-link" href="{{ url_for('category', post_type=post_type, category=category, page=page+1) if page < total_pages else '#' }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <a href="{{ url_for('home') }}" class="btn btn-outline-secondary mt-3">Back to Home</a>
+{% endblock %}
