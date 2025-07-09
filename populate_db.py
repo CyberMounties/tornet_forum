@@ -2,13 +2,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from models import db, User, Shoutbox, Announcement, Marketplace, Service, Comment
+from models import db, User, Announcement, Marketplace, Service, Comment
 from datetime import datetime, timedelta
 import random
 import logging
 
 # Configuration variables
-NUM_SHOUTBOX_MESSAGES = 20
 NUM_POSTS_PER_CATEGORY = 13
 NUM_COMMENTS_PER_POST = 2
 NUM_IAB_SELLER_POSTS = 3  # Number of random IAB posts in Sellers (10 predefined + 3 = 13)
@@ -87,16 +86,6 @@ def init_db():
             return (datetime.now() - timedelta(days=days_ago, hours=hours_ago, minutes=minutes_ago, seconds=seconds_ago)).strftime('%Y-%m-%d %H:%M:%S')
 
         # Templates and replacements for text generation
-        shoutbox_templates = [
-            "New {item} drop in {place}!",
-            "Looking for {item}, PM me!",
-            "Anyone got {item} for sale?",
-            "Fresh {item} available, DM for details!"
-        ]
-        shoutbox_replacements = {
-            "item": ["CC dumps", "PayPal accounts", "phishing kits", "DDoS service", "malware"],
-            "place": ["marketplace", "services", "dark pool"]
-        }
         announcement_templates = {
             "title": [
                 "{action} {item}",
@@ -256,27 +245,6 @@ def init_db():
         comment_replacements = {
             "item": ["this deal", "your service", "the credentials", "this data"]
         }
-
-        # Populate Shoutbox
-        logger.info(f"Populating shoutbox with {NUM_SHOUTBOX_MESSAGES} messages")
-        for i in range(0, NUM_SHOUTBOX_MESSAGES, 5):  # Batch of 5
-            batch_size = min(5, NUM_SHOUTBOX_MESSAGES - i)
-            messages = [generate_text(random.choice(shoutbox_templates), shoutbox_replacements)[:50] for _ in range(batch_size)]
-            for j, message in enumerate(messages):
-                shout = Shoutbox(
-                    user_id=random.choice(user_ids),
-                    message=message,
-                    timestamp=random_timestamp()
-                )
-                db.session.add(shout)
-                logger.info(f"Added shoutbox message {i + j + 1}/{NUM_SHOUTBOX_MESSAGES}: {message[:30]}...")
-            try:
-                db.session.commit()
-                logger.info(f"Committed shoutbox messages {i + 1}-{i + batch_size}")
-            except Exception as e:
-                logger.error(f"Error committing shoutbox messages: {str(e)}")
-                db.session.rollback()
-                return
 
         # Populate Announcements (NUM_POSTS_PER_CATEGORY per category: Announcements, General, MM Service)
         categories = ['Announcements', 'General', 'MM Service']
@@ -438,7 +406,7 @@ def init_db():
 
         total_posts = NUM_POSTS_PER_CATEGORY * (len(['Announcements', 'General', 'MM Service']) + len(['Buyers', 'Sellers']) + len(['Buy', 'Sell']))
         logger.info("Database population completed successfully")
-        print(f"Database initialized with 10 users, {total_posts} posts, {NUM_SHOUTBOX_MESSAGES} shoutbox messages, and {total_comments} comments.")
+        print(f"Database initialized with 10 users, {total_posts} posts, and {total_comments} comments.")
 
 if __name__ == '__main__':
     init_db()

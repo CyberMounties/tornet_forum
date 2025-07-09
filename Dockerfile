@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
-COPY app.py models.py populate_db.py sellers_simulator.py shoutbox_simulator.py entrypoint.sh ./
+COPY app.py models.py populate_db.py sellers_simulator.py entrypoint.sh ./
 COPY templates/ ./templates/
 COPY static/ ./static/
 

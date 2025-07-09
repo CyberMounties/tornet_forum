@@ -34,7 +34,6 @@ python populate_db.py
 # Start simulators in background
 echo "Starting simulators..."
 python sellers_simulator.py &
-python shoutbox_simulator.py &
 
 # Start gunicorn on port 5000
 echo "Starting gunicorn..."
