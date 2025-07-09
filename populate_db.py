@@ -167,8 +167,8 @@ def init_db():
                 "price": "0.6 BTC"
             },
             {
-                "title": "AspenWell Biotech Ltd Access",
-                "description": "Company: AspenWell Biotech Ltd\nLocation: Netherlands\nRevenue: $1.3 billion\nAccess type: VPN > internal RDP > DA\nAdditional: SharePoint exposed, RMM agent deployed\nSecurity: No AV on internal, no logs tripped\nPrice: 1.05 BTC, escrow ok w/ rep\nSelling to ONE buyer only.",
+                "title": "AspenWell 生物科技有限公司 访问",
+                "description": "公司：AspenWell Biotech Ltd\n地点：荷兰\n收入：$1.3 亿美元\n访问类型：VPN > 内部 RDP > DA\n额外信息：SharePoint 暴露，部署了 RMM 代理\n安全：内部无防病毒软件，未触发日志\n价格：1.05 BTC，支持 escrow 支付（需与卖家协商）\n仅向一名买家出售。",
                 "price": "1.05 BTC"
             },
             {
@@ -187,8 +187,8 @@ def init_db():
                 "price": "0.9 BTC"
             },
             {
-                "title": "Veritas Health Partners Access",
-                "description": "Access for sale: Veritas Health Partners, Canada\nRevenue: ~$430M\nIndustry: Healthcare\nAccess type: VPN + working RDP\nPrivilege: Local admin w/ internal share access\nNot detected – 6 days uptime\nPrice: 0.58 BTC firm",
+                "title": "베리타스 헬스 파트너스 액세스",
+                "description": "판매 중: Veritas Health Partners, 캐나다\n매출: 약 $430M\n산업: 의료\n접근 유형: VPN + 작동 중인 RDP\n권한: 로컬 관리자 권한 및 내부 공유 액세스\n탐지되지 않음 – 6일 연속 가동 중\n가격: 0.58 BTC 고정 가격",
                 "price": "0.58 BTC"
             },
             {
@@ -197,8 +197,8 @@ def init_db():
                 "price": "DM for price"
             },
             {
-                "title": "Monarch Real Estate Access",
-                "description": "Company: Monarch Real Estate Investments\nLocation: USA, NY\nRevenue: $380M\nAccess: Citrix > internal RDP > DA\nPersistence set, untouched for 4+ days\nBacked up docs + client lease agreements accessible\nPrice: 0.7 BTC, serious people only",
+                "title": "Доступ к недвижимости Monarch",
+                "description": "Компания: Monarch Real Estate Investments\nМестонахождение: США, Нью-Йорк\nВыручка: 380 млн долларов\nДоступ: Citrix > внутренний RDP > DA\nНабор постоянных файлов, нетронутый более 4 дней\nДоступны резервные копии документов + договоры аренды клиентов\nЦена: 0,7 BTC, только для серьезных людей",
                 "price": "0.7 BTC"
             }
         ]
