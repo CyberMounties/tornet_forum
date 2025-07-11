@@ -11,6 +11,9 @@
                 <div>
                     <h5 class="text-light mb-0">{{ user.username }}</h5>
                     <p class="text-light mb-0">Total Posts: {{ post_count }}</p>
+                    {% if current_user.is_authenticated and current_user.username == user.username %}
+                        <p class="text-light mb-0">You are logged in as {{ user.username }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
