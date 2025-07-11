@@ -6,6 +6,9 @@ from models import db, User, Announcement, Marketplace, Service, Comment
 import string, random, os
 from captcha.image import ImageCaptcha
 from datetime import datetime
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -16,17 +19,29 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["500 per day", "200 per hour"],
+    storage_uri="memory://"
+)
+
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    return render_template("429.html"), 429
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 # CAPTCHA configuration
-CAPTCHA_LENGTH = 8
+CAPTCHA_LENGTH = 6
 CAPTCHA_CHARS = string.ascii_uppercase + string.digits
 image_captcha = ImageCaptcha(fonts=['fonts/DejaVuSans.ttf'], width=200, height=60)
 
 def generate_captcha():
-    """Generate an 8-character CAPTCHA and image."""
+    """Generate an 6-character CAPTCHA and image."""
     code = ''.join(random.choice(CAPTCHA_CHARS) for _ in range(CAPTCHA_LENGTH))
     image_path = os.path.join('static', 'captchas', f'captcha_{code}.png')
     image_captcha.write(code, image_path)
@@ -247,6 +262,7 @@ def category(post_type, category):
     return render_template('category.html', post_type=post_type, category=category, page=page, posts=posts, total_pages=total_pages)
 
 @app.route('/post/<post_type>/<int:post_id>')
+@limiter.limit("30 per minute")
 @login_required
 def post_detail(post_type, post_id):
     if post_type not in ['announcements', 'marketplace', 'services']:

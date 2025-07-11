@@ -8,9 +8,9 @@ import random
 import logging
 
 # Configuration variables
-NUM_POSTS_PER_CATEGORY = 13
+NUM_POSTS_PER_CATEGORY = 100
 NUM_COMMENTS_PER_POST = 2
-NUM_IAB_SELLER_POSTS = 3  # Number of random IAB posts in Sellers (10 predefined + 3 = 13)
+NUM_IAB_SELLER_POSTS = 3
 
 # Configure logging
 logging.basicConfig(
