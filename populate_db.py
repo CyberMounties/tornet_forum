@@ -322,7 +322,30 @@ def init_db():
                     db.session.rollback()
                     return
 
-                # No non-IAB posts needed since 10 predefined + 3 random = 13
+                # Add non-IAB posts to reach NUM_POSTS_PER_CATEGORY
+                for i in range(0, NUM_POSTS_PER_CATEGORY, 5):  # Batch of 5
+                    batch_size = min(5, NUM_POSTS_PER_CATEGORY - i)
+                    titles = [generate_text(random.choice(marketplace_templates["title"][category]), marketplace_replacements)[:100] for _ in range(batch_size)]
+                    descriptions = [generate_text(random.choice(marketplace_templates["description"][category]), marketplace_replacements)[:200] for _ in range(batch_size)]
+                    for j, (title, description) in enumerate(zip(titles, descriptions)):
+                        price = f"Offer ${random.randint(50, 500)}"
+                        market = Marketplace(
+                            category=category,
+                            title=title,
+                            description=description,
+                            user_id=random.choice(user_ids),
+                            price=price,
+                            date=random_timestamp()
+                        )
+                        db.session.add(market)
+                        logger.info(f"Added {category} marketplace post {i + j + 1}/{NUM_POSTS_PER_CATEGORY}: {title[:30]}...")
+                    try:
+                        db.session.commit()
+                        logger.info(f"Committed {category} marketplace posts {i + 1}-{i + batch_size}")
+                    except Exception as e:
+                        logger.error(f"Error committing {category} marketplace posts: {str(e)}")
+                        db.session.rollback()
+                        return
             else:
                 # Buyers: all non-IAB
                 for i in range(0, NUM_POSTS_PER_CATEGORY, 5):  # Batch of 5
@@ -404,7 +427,7 @@ def init_db():
                 db.session.rollback()
                 return
 
-        total_posts = NUM_POSTS_PER_CATEGORY * (len(['Announcements', 'General', 'MM Service']) + len(['Buyers', 'Sellers']) + len(['Buy', 'Sell']))
+        total_posts = NUM_POSTS_PER_CATEGORY * (len(['Announcements', 'General', 'MM Service']) + len(['Buyers']) + len(['Buy', 'Sell'])) + (NUM_POSTS_PER_CATEGORY + predefined_count + NUM_IAB_SELLER_POSTS)
         logger.info("Database population completed successfully")
         print(f"Database initialized with 10 users, {total_posts} posts, and {total_comments} comments.")
 
