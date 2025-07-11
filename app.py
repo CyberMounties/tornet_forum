@@ -43,7 +43,8 @@ image_captcha = ImageCaptcha(fonts=['fonts/DejaVuSans.ttf'], width=200, height=6
 def generate_captcha():
     """Generate an 6-character CAPTCHA and image."""
     code = ''.join(random.choice(CAPTCHA_CHARS) for _ in range(CAPTCHA_LENGTH))
-    image_path = os.path.join('static', 'captchas', f'captcha_{code}.png')
+    random_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
+    image_path = os.path.join('static', 'captchas', f'captcha_{random_name}.png')
     image_captcha.write(code, image_path)
     return code, image_path
 
