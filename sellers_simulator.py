@@ -2,10 +2,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from models import db, User, Marketplace
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 import logging
 import time
+
 
 # Configure logging
 logging.basicConfig(
@@ -87,6 +88,15 @@ neutral_replacements = {
     "price": ["0.02 BTC", "0.05 BTC", "0.01 BTC", "0.03 BTC", "$50"]
 }
 
+
+def random_timestamp():
+    days_ago = random.randint(0, 30)
+    hours_ago = random.randint(0, 23)
+    minutes_ago = random.randint(0, 59)
+    seconds_ago = random.randint(0, 59)
+    return (datetime.now() - timedelta(days=days_ago, hours=hours_ago, minutes=minutes_ago, seconds=seconds_ago)).strftime('%Y-%m-%d %H:%M:%S')
+
+
 def paraphrase_post(template, replacements):
     """Paraphrase a post by replacing placeholders or modifying structure."""
     try:
@@ -136,7 +146,7 @@ def add_sellers_post(post_type):
             description=description[:200],
             user_id=random.choice(user_ids),
             price=price[:20],
-            date=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            date=random_timestamp()
         )
         try:
             db.session.add(post)
