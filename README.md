@@ -27,6 +27,19 @@ sudo docker compose up -d
 These commands build the Docker environment and start the forum in the background.
 
 
+## Running site without docker
+
+You can also run the site without docker by downloading `tornet_forum` and running it:
+```
+git clone https://github.com/CyberMounties/tornet_forum.git
+cd tornet_forum
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+flask run --debug               # Remove --debug if you want to run without debugger
+```
+
+
 ## Accessing the Site
 
 After the Docker container is up and running, retrieve the onion link for the Tor-hosted site by executing the following command:
